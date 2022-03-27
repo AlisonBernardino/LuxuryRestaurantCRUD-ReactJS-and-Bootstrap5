@@ -1,14 +1,20 @@
 import { useState } from 'react';
 import './App.css';
+import RestaurantForm from './components/RestaurantForm';
+import Restaurant from './components/Restaurant';
 
 let initialState = [
   {
     id: 1,
-    description: '5-star plaza Restaurant'
+    title: 'FiveStar plaza Restaurant',
+    rating: '5',
+    description: '"Comfort, beauty, variety. All for you"'
   },
   {
     id: 2,
-    description: 'Blue Hall Restaurant'
+    title: 'Blue Hall Restaurant',
+    rating: '4',
+    description: '"A good place to enjoy your time"'
   },
 ];
 
@@ -21,33 +27,28 @@ function App() {
 
     const restaurant = {
       id: document.getElementById('idArea').value,
+      title: document.getElementById('titleArea').value,
+      rating: document.getElementById('ratingArea').value,
       description: document.getElementById('descriptionArea').value,
     }
     setRestaurants([...restaurants, { ...restaurant }]);
   }
 
+  function removeRestaurant(id){
+    const filteredRestaurants = restaurants.filter(restaurant => restaurant.id !== id);
+    setRestaurants([...filteredRestaurants]);
+  }
+
   return (
     <>
-      <form className="row g-3">
-        <div className="col-md-6">
-          <label for="inputEmail4" className="form-label">ID: </label>
-          <input id='idArea' type="text" className="form-control" />
-        </div>
-        <div className="col-md-6">
-          <label for="inputEmail4" className="form-label">Title: </label>
-          <input id="descriptionArea" type="text" className="form-control" />
-        </div>
-        <div class="col-12">
-          <button className="btn btn-success" onClick={addRestaurant}> Add </button>
-        </div>
-      </form>
+      <RestaurantForm
+        addRestaurant={addRestaurant}
+        restaurants={restaurants}/>
       <div className='mt-3'>
         {restaurants.map((restaurant) => (
-          <div key={restaurant.id} className="card mb-2 shadow">
-            <div className="card-body">
-              <p className="card-text"> {restaurant.id} - {restaurant.description} </p>
-            </div>
-          </div>
+          <Restaurant key={restaurant.id}
+          restaurant={restaurant}
+          removeRestaurant={removeRestaurant}/>
         ))}
       </div>
     </>
