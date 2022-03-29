@@ -27,7 +27,7 @@ function App() {
     event.preventDefault();
 
     const restaurant = {
-      id: document.getElementById('idArea').value,
+      id: Math.max.apply(Math, restaurants.map((place) => place.id)) + 1,
       title: document.getElementById('titleArea').value,
       rating: document.getElementById('ratingArea').value,
       description: document.getElementById('descriptionArea').value,
