@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import './App.css';
 import RestaurantForm from './components/RestaurantForm';
-import Restaurant from './components/Restaurant';
 import RestaurantsList from './components/RestaurantsList';
 
 let initialState = [
@@ -20,7 +19,8 @@ let initialState = [
 ];
 
 function App() {
-  const [restaurants, setRestaurants] = useState(initialState)
+  const [restaurants, setRestaurants] = useState(initialState);
+  const [restaurant, setRestaurant] = useState({});
 
   // Making an "Add" function through the pure JS method
   function addRestaurant(event) {
@@ -36,18 +36,25 @@ function App() {
   }
 
   function removeRestaurant(id) {
-    const filteredRestaurants = restaurants.filter(restaurant => restaurant.id !== id);
+    const filteredRestaurants = restaurants.filter((restaurant) => restaurant.id !== id);
     setRestaurants([...filteredRestaurants]);
+  }
+
+  function editRestaurant(id){
+    const targetedRestaurant = restaurants.filter((targetedRestaurant) => targetedRestaurant.id === id);
+    setRestaurant(targetedRestaurant[0]);
   }
 
   return (
     <>
       <RestaurantForm
         addRestaurant={addRestaurant}
+        selectedRestaurant={restaurant}
         restaurants={restaurants} />
       <RestaurantsList
         restaurants={restaurants}
-        removeRestaurant={removeRestaurant} />
+        removeRestaurant={removeRestaurant}
+        editRestaurant={editRestaurant} />
     </>
   );
 }

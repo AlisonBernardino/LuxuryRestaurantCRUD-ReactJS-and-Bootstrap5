@@ -7,7 +7,8 @@ export default function RestaurantsList(props) {
             {props.restaurants.map((restaurant) => (
                 <Restaurant key={restaurant.id}
                     restaurant={restaurant}
-                    removeRestaurant={props.removeRestaurant} />
+                    removeRestaurant={props.removeRestaurant}
+                    editRestaurant={props.editRestaurant} />
             ))}
         </div>
     )
