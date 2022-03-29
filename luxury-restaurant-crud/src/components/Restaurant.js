@@ -69,11 +69,13 @@ export default function Restaurant(props) {
                 </div>
                 <p className="card-text"> {props.restaurant.description} </p>
                 <div className="d-flex justify-content-end pt-2">
-                    <button className="btn btn-primary me-2 btn-sm">
+                    <button className="btn btn-primary me-2 btn-sm"
+                        onClick={() => props.editRestaurant(props.restaurant.id)}>
                         <i className="fas fa-pen me-2"></i>
                         Edit
                     </button>
-                    <button className="btn btn-danger btn-sm" onClick={() => props.removeRestaurant(props.restaurant.id)}>
+                    <button className="btn btn-danger btn-sm"
+                        onClick={() => props.removeRestaurant(props.restaurant.id)}>
                         <i className="fas fa-trash me-2"></i>
                         Delete
                     </button>

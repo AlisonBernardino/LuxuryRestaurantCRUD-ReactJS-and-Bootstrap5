@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import RestaurantForm from './components/RestaurantForm';
 import Restaurant from './components/Restaurant';
+import RestaurantsList from './components/RestaurantsList';
 
 let initialState = [
   {
@@ -34,7 +35,7 @@ function App() {
     setRestaurants([...restaurants, { ...restaurant }]);
   }
 
-  function removeRestaurant(id){
+  function removeRestaurant(id) {
     const filteredRestaurants = restaurants.filter(restaurant => restaurant.id !== id);
     setRestaurants([...filteredRestaurants]);
   }
@@ -43,14 +44,10 @@ function App() {
     <>
       <RestaurantForm
         addRestaurant={addRestaurant}
-        restaurants={restaurants}/>
-      <div className='mt-3'>
-        {restaurants.map((restaurant) => (
-          <Restaurant key={restaurant.id}
-          restaurant={restaurant}
-          removeRestaurant={removeRestaurant}/>
-        ))}
-      </div>
+        restaurants={restaurants} />
+      <RestaurantsList
+        restaurants={restaurants}
+        removeRestaurant={removeRestaurant} />
     </>
   );
 }
