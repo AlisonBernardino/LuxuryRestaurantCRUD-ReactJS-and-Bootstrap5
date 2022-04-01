@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import RestaurantForm from './components/RestaurantForm';
 import RestaurantsList from './components/RestaurantsList';
@@ -20,19 +20,16 @@ let initialState = [
 
 function App() {
   const [restaurants, setRestaurants] = useState(initialState);
-  const [restaurant, setRestaurant] = useState({});
+  const [restaurant, setRestaurant] = useState({id: 0});
+  const [index, setIndex] = useState(0);
 
+  useEffect(() => {
+    restaurants.length <= 0 ? setIndex(1) : setIndex(Math.max.apply(Math, restaurants.map((place) => place.id)) + 1)
+  }, [restaurants])
   // Making an "Add" function through the pure JS method
-  function addRestaurant(event) {
-    event.preventDefault();
-
-    const restaurant = {
-      id: Math.max.apply(Math, restaurants.map((place) => place.id)) + 1,
-      title: document.getElementById('titleArea').value,
-      rating: document.getElementById('ratingArea').value,
-      description: document.getElementById('descriptionArea').value,
-    }
-    setRestaurants([...restaurants, { ...restaurant }]);
+  function addRestaurant(additionElement) {
+    setRestaurants([...restaurants, { ...additionElement, id: index }]
+    );
   }
 
   function removeRestaurant(id) {
@@ -40,7 +37,16 @@ function App() {
     setRestaurants([...filteredRestaurants]);
   }
 
-  function editRestaurant(id){
+  function updateRestaurant(restaurant) {
+    setRestaurants(restaurants.map(item => item.id === restaurant.id ? restaurant : item));
+    setRestaurant({ id: 0 });
+  }
+
+  function cancelRestaurantCustomization() {
+    setRestaurant({ id: 0 });
+  }
+
+  function editRestaurant(id) {
     const targetedRestaurant = restaurants.filter((targetedRestaurant) => targetedRestaurant.id === id);
     setRestaurant(targetedRestaurant[0]);
   }
@@ -50,6 +56,8 @@ function App() {
       <RestaurantForm
         addRestaurant={addRestaurant}
         selectedRestaurant={restaurant}
+        updateRestaurant={updateRestaurant}
+        cancelRestaurantCustomization={cancelRestaurantCustomization}
         restaurants={restaurants} />
       <RestaurantsList
         restaurants={restaurants}

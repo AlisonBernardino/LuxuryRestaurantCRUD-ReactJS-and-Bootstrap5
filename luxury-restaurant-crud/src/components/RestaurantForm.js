@@ -25,7 +25,19 @@ export default function RestaurantForm(props) {
     const handleCancelOperation = (item) => {
         item.preventDefault();
 
+        props.cancelRestaurantCustomization();
+
         setRestaurant(startingRestaurant);
+    }
+
+    const handleSubmit = (submitItem) => {
+        submitItem.preventDefault();
+
+        if(props.selectedRestaurant.id !== 0){
+            props.updateRestaurant(restaurant);
+        }else{
+            setRestaurant(startingRestaurant);
+        }
     }
 
     function setCurrentRestaurant() {
@@ -41,7 +53,7 @@ export default function RestaurantForm(props) {
         <hr/>
         <h3> Luxury Restaurant - Establishments management </h3>
         <hr/>
-            <form className="row g-3">
+            <form className="row g-3" onSubmit={handleSubmit}>
                 <div className="col-md-6">
                     <label className="form-label">Title: </label>
                     <input mark="titleArea" id="titleArea" onChange={handleInput} type="text" className="form-control" value={restaurant.title} />
@@ -62,8 +74,7 @@ export default function RestaurantForm(props) {
                     <textarea mark="descriptionArea" id="descriptionArea" type="text" onChange={handleInput} className="form-control" value={restaurant.description} />
                 </div>
                 <div className="col-12">
-
-                    {restaurant.id === 0 ? (<button className="btn btn-success" onClick={props.addRestaurant}> Add new + </button>) :
+                    {restaurant.id === 0 ? (<button className="btn btn-success" onClick={props.addRestaurant} type="submit"> Add new + </button>) :
                         (<>
                             <button className="btn btn-primary me-2" type="submit"> Save changes </button>
                             <button className="btn btn-danger" onClick={handleCancelOperation}> Cancel </button>
