@@ -51,36 +51,41 @@ export default function Restaurant(props) {
                 return 'Error. Unknown border. Please, re-check this information.';
         }
     }
+
     return (
-        <div className={"card mb-2 shadow border-" + setRatingBorder(props.restaurant.rating)}>
-            <div className="card-body">
-                <div className="d-flex justify-content-between">
-                    <h5 className="card-title">
-                        {props.restaurant.title}
-                        <span className="badge rounded-pill bg-warning ms-2"> New </span>
+        <div className={'card mb-2 shadow-sm border -' + ratingStyle(props.stablishment.rating)}
+        >
+            <div className='card-body'>
+                <div className='d-flex justify-content-between'>
+                    <h5 className='card-title'>
+                        <span className='badge bg-secondary me-1'>
+                            {props.stablishment.ID}
+                        </span>
+                        - {props.stablishment.title}
                     </h5>
-                    <h6>
-                        Rating:
-                        <span className={"ms-1 text-" + setRatingBorder(props.restaurant.rating)}>
-                            <i className={"fa-solid me-1 fa-" + setRatingIcon(props.restaurant.rating)}></i>
-                            x{setRatingValue(props.restaurant.rating)}
+                    <h6> Rating:
+                        <span className={'ms-1 text-' + ratingStyle(props.stablishment.rating)
+                        }
+                        >
+                            <i className={'me-1 far fa-' + ratingStyle(props.stablishment, true)
+                            }
+                            ></i>
+                            {ratingLabel(props.stablishment.rating)}
                         </span>
                     </h6>
                 </div>
-                <p className="card-text"> {props.restaurant.description} </p>
-                <div className="d-flex justify-content-end pt-2">
-                    <button className="btn btn-primary me-2 btn-sm"
-                        onClick={() => props.editRestaurant(props.restaurant.id)}>
-                        <i className="fas fa-pen me-2"></i>
+                <p className='card-text'> {props.stablishment.description}</p>
+                <div className='d-flex justify-content-end pt-2 m-0 border-top'>
+                    <button className='btn btn-sm btn-primary me-2' onClick={() => props.selectPlace(props.stablishment.ID)}>
+                        <i className='fas fa-pen me-2'></i>
                         Edit
                     </button>
-                    <button className="btn btn-danger btn-sm"
-                        onClick={() => props.removeRestaurant(props.restaurant.id)}>
-                        <i className="fas fa-trash me-2"></i>
-                        Delete
+                    <button className='btn btn-sm btn-danger' onClick={() => props.removePlace(props.stablishment.ID)}>
+                        <i className='fas fa-trash me-2'></i>
+                        Remove
                     </button>
                 </div>
             </div>
         </div>
-    )
+    );
 }
